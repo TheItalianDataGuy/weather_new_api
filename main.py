@@ -6,14 +6,17 @@ import pandas as pd
 # Create a website object
 app = Flask(__name__)
 
-
+# Table to be visualised on the home webpage
+stations = pd.read_csv("data_small/stations.txt", skiprows=17)
+stations = stations[["STAID", "STANAME                                 "]]
 
 # Connect html pages to the website object (DECORATOR)
 @app.route("/")
 # Define a function to open the html page
 # (create a template folder to keep all the html files)
+# Add data using to_html method to add the table - in the html file add {{data|safe}}
 def home():
-    return render_template("home.html")
+    return render_template("home.html", data=stations.to_html())
 
 
 # By using <statio> <date> you make this variable dynamic
