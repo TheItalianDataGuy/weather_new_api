@@ -39,6 +39,8 @@ def about(station, date):
 def all_data(station):
     filename = "data_small/TG_STAID" + str(station).zfill(6) + ".txt"
     df = pd.read_csv(filename, skiprows=20, parse_dates=["    DATE"])
+    # Modify the dataframe so that it will show just the date and the temperature
+    df = df[["    DATE", '   TG']]
     result = df.to_dict(orient="records")
     return result
 
@@ -53,6 +55,7 @@ def yearly(station, year):
     df['    DATE'] = df['    DATE'].astype(str)
     result = df[df['    DATE'].str.startswith(str(year))].to_dict(orient="records")
     return result
+
 
 # If run multiple Flask apps, change the port (default port is 5000)
 if __name__ == "__main__":
